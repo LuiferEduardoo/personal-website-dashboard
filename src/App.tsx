@@ -1,30 +1,43 @@
+import { useState } from 'react';
+import type { ReactNode } from 'react';
 import { useAuth } from './context/AuthContext';
 import LoginPage from './pages/LoginPage';
+import BlogPage from './pages/BlogPage';
+import ProjectsPage from './pages/ProjectsPage';
+import ImagesPage from './pages/ImagesPage';
+import DashboardLayout from './components/layout/DashboardLayout';
+import type { NavItem } from './components/layout/Sidebar';
+import { BlogIcon, ImagesIcon, ProjectsIcon } from './components/icons';
+
+type SectionId = 'blog' | 'projects' | 'images';
+
+const NAV_ITEMS: (NavItem & { id: SectionId })[] = [
+  { id: 'blog', label: 'Blog', icon: <BlogIcon /> },
+  { id: 'projects', label: 'Proyectos', icon: <ProjectsIcon /> },
+  { id: 'images', label: 'Imágenes', icon: <ImagesIcon /> },
+];
+
+const SECTION_PAGES: Record<SectionId, ReactNode> = {
+  blog: <BlogPage />,
+  projects: <ProjectsPage />,
+  images: <ImagesPage />,
+};
 
 export default function App() {
-  const { isAuthenticated, logout } = useAuth();
+  const { isAuthenticated } = useAuth();
+  const [section, setSection] = useState<SectionId>('blog');
 
   if (!isAuthenticated) {
     return <LoginPage />;
   }
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-gray-50 px-4">
-      <div className="w-full max-w-md rounded-2xl border border-gray-200 bg-white p-8 text-center shadow-sm">
-        <h1 className="mb-2 text-2xl font-semibold text-gray-900">
-          Sesión iniciada
-        </h1>
-        <p className="mb-6 text-sm text-gray-500">
-          Bienvenido al dashboard.
-        </p>
-        <button
-          type="button"
-          onClick={logout}
-          className="inline-flex items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm transition hover:bg-gray-50"
-        >
-          Cerrar sesión
-        </button>
-      </div>
-    </main>
+    <DashboardLayout
+      items={NAV_ITEMS}
+      activeId={section}
+      onSelect={(id) => setSection(id as SectionId)}
+    >
+      {SECTION_PAGES[section]}
+    </DashboardLayout>
   );
 }
