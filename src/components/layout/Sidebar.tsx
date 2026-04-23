@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import type { ReactNode } from 'react';
-import { BlogIcon, ImagesIcon, LogoIcon, LogoutIcon, ProjectsIcon } from '../icons';
+import { BlogIcon, ImagesIcon, LogoutIcon, ProjectsIcon } from '../icons';
 import { useAuth } from '../../context/AuthContext';
 import UserBadge from './UserBadge';
 
@@ -29,10 +29,11 @@ export default function Sidebar() {
     >
       <div className="flex flex-col gap-8">
         <div className="flex items-center gap-3 px-3">
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary text-primary-foreground">
-            <LogoIcon width={22} height={22} />
-          </div>
-          <span className={`${labelClasses} text-gray-900`}>Dashboard</span>
+          <img
+            src="/logo.svg"
+            alt="Logo"
+            className="h-10 w-10 shrink-0"
+          />
         </div>
 
         <nav aria-label="Secciones" className="flex flex-col gap-1 px-3">

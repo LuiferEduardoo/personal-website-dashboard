@@ -14,15 +14,6 @@ const baseProps: IconProps = {
   'aria-hidden': true,
 };
 
-export function LogoIcon(props: IconProps) {
-  return (
-    <svg {...baseProps} {...props}>
-      <path d="M4 20V4h6a4 4 0 0 1 0 8H4" />
-      <path d="M4 12h7a4 4 0 0 1 0 8H4" />
-    </svg>
-  );
-}
-
 export function BlogIcon(props: IconProps) {
   return (
     <svg {...baseProps} {...props}>
