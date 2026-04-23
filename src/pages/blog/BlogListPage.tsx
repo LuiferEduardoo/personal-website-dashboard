@@ -4,8 +4,10 @@ import { ApiError } from '../../lib/api';
 import BlogList from '../../features/blog/components/BlogList';
 import { useBlogPosts } from '../../features/blog/context';
 import type { BlogPostRead } from '../../features/blog/types';
+import { usePageTitle } from '../../hooks/usePageTitle';
 
 export default function BlogListPage() {
+  usePageTitle('Blog');
   const { posts, loading, error: listError, removePost } = useBlogPosts();
   const navigate = useNavigate();
   const [pendingDelete, setPendingDelete] = useState<BlogPostRead | null>(null);

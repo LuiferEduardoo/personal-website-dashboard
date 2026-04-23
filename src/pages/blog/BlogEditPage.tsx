@@ -2,6 +2,7 @@ import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import BlogEditor from '../../features/blog/components/BlogEditor';
 import { useBlogPosts } from '../../features/blog/context';
 import type { BlogPostUpdatePayload } from '../../features/blog/types';
+import { usePageTitle } from '../../hooks/usePageTitle';
 
 export default function BlogEditPage() {
   const { id } = useParams<{ id: string }>();
@@ -9,6 +10,8 @@ export default function BlogEditPage() {
   const { getById, updatePost, loading } = useBlogPosts();
 
   const postId = Number(id);
+  const post = Number.isFinite(postId) ? getById(postId) : undefined;
+  usePageTitle(post ? `Editar: ${post.title}` : 'Editar publicación');
 
   if (!Number.isFinite(postId)) {
     return <Navigate to="/blogs" replace />;
@@ -21,8 +24,6 @@ export default function BlogEditPage() {
       </section>
     );
   }
-
-  const post = getById(postId);
 
   if (!post) {
     return (

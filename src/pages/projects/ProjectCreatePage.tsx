@@ -2,8 +2,10 @@ import { useNavigate } from 'react-router-dom';
 import ProjectEditor from '../../features/projects/components/ProjectEditor';
 import { useProjects } from '../../features/projects/context';
 import type { ProjectCreatePayload } from '../../features/projects/types';
+import { usePageTitle } from '../../hooks/usePageTitle';
 
 export default function ProjectCreatePage() {
+  usePageTitle('Nuevo proyecto');
   const { createProject } = useProjects();
   const navigate = useNavigate();
 

@@ -2,8 +2,10 @@ import { useNavigate } from 'react-router-dom';
 import BlogEditor from '../../features/blog/components/BlogEditor';
 import { useBlogPosts } from '../../features/blog/context';
 import type { BlogPostCreatePayload } from '../../features/blog/types';
+import { usePageTitle } from '../../hooks/usePageTitle';
 
 export default function BlogCreatePage() {
+  usePageTitle('Nueva publicación');
   const { createPost } = useBlogPosts();
   const navigate = useNavigate();
 

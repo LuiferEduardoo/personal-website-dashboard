@@ -4,8 +4,10 @@ import { ApiError } from '../../lib/api';
 import ProjectsList from '../../features/projects/components/ProjectsList';
 import { useProjects } from '../../features/projects/context';
 import type { ProjectRead } from '../../features/projects/types';
+import { usePageTitle } from '../../hooks/usePageTitle';
 
 export default function ProjectsListPage() {
+  usePageTitle('Proyectos');
   const { projects, loading, error: listError, removeProject } = useProjects();
   const navigate = useNavigate();
   const [pendingDelete, setPendingDelete] = useState<ProjectRead | null>(null);

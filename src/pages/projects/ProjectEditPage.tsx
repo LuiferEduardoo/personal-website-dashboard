@@ -2,6 +2,7 @@ import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import ProjectEditor from '../../features/projects/components/ProjectEditor';
 import { useProjects } from '../../features/projects/context';
 import type { ProjectUpdatePayload } from '../../features/projects/types';
+import { usePageTitle } from '../../hooks/usePageTitle';
 
 export default function ProjectEditPage() {
   const { id } = useParams<{ id: string }>();
@@ -9,6 +10,8 @@ export default function ProjectEditPage() {
   const { getById, updateProject, loading } = useProjects();
 
   const projectId = Number(id);
+  const project = Number.isFinite(projectId) ? getById(projectId) : undefined;
+  usePageTitle(project ? `Editar: ${project.name}` : 'Editar proyecto');
 
   if (!Number.isFinite(projectId)) {
     return <Navigate to="/projects" replace />;
@@ -21,8 +24,6 @@ export default function ProjectEditPage() {
       </section>
     );
   }
-
-  const project = getById(projectId);
 
   if (!project) {
     return (

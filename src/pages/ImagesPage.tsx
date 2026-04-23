@@ -5,8 +5,10 @@ import ImageDropzone from '../features/images/components/ImageDropzone';
 import ImageGrid from '../features/images/components/ImageGrid';
 import { deleteImage, uploadImage } from '../features/images/api';
 import type { ImageRead } from '../features/images/types';
+import { usePageTitle } from '../hooks/usePageTitle';
 
 export default function ImagesPage() {
+  usePageTitle('Imágenes');
   const { token } = useAuth();
   const [images, setImages] = useState<ImageRead[]>([]);
   const [folder, setFolder] = useState('');
