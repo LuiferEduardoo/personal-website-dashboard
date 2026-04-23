@@ -29,7 +29,7 @@ function toCreateFormData(payload: ProjectCreatePayload): FormData {
   body.append('name', payload.name);
   body.append('brief_description', payload.brief_description);
   body.append('description', payload.description);
-  body.append('url_project', payload.url_project);
+  if (payload.url_project) body.append('url_project', payload.url_project);
   if (payload.visible !== undefined) body.append('visible', String(payload.visible));
   for (const id of payload.category_ids ?? []) {
     body.append('category_ids', String(id));

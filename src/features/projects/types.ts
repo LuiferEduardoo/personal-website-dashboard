@@ -27,7 +27,7 @@ export type ProjectCreatePayload = {
   name: string;
   brief_description: string;
   description: string;
-  url_project: string;
+  url_project?: string;
   visible?: boolean;
   category_ids?: number[];
   subcategory_ids?: number[];

@@ -48,7 +48,6 @@ export default function ProjectEditor({
 
     if (!name.trim()) return setError('El nombre es obligatorio.');
     if (!briefDescription.trim()) return setError('La descripción breve es obligatoria.');
-    if (!urlProject.trim()) return setError('La URL del proyecto es obligatoria.');
     if (!description.trim() || description === '<p></p>') {
       return setError('La descripción es obligatoria.');
     }
@@ -72,7 +71,7 @@ export default function ProjectEditor({
           name,
           brief_description: briefDescription,
           description,
-          url_project: urlProject,
+          url_project: urlProject || undefined,
           visible,
           image_file: imageFile,
           image_url: imageUrl || null,
@@ -149,12 +148,12 @@ export default function ProjectEditor({
 
         <div className="flex flex-col gap-1.5">
           <label htmlFor="project-url" className="text-sm font-medium text-gray-700">
-            URL del proyecto
+            URL del proyecto{' '}
+            <span className="font-normal text-gray-400">(opcional)</span>
           </label>
           <input
             id="project-url"
             type="url"
-            required
             maxLength={2048}
             placeholder="https://..."
             value={urlProject}
