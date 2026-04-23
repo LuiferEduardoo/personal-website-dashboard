@@ -5,3 +5,49 @@
   --color-primary-hover: #3b82f6;
   --color-primary-foreground: #ffffff;
 }
+
+@layer components {
+  .rich-editor {
+    min-height: 18rem;
+    outline: none;
+    color: #111827;
+    line-height: 1.7;
+  }
+  .rich-editor h1 { font-size: 1.875rem; font-weight: 700; margin-block: 0.75rem; }
+  .rich-editor h2 { font-size: 1.5rem; font-weight: 700; margin-block: 0.6rem; }
+  .rich-editor h3 { font-size: 1.25rem; font-weight: 600; margin-block: 0.5rem; }
+  .rich-editor p { margin-block: 0.5rem; }
+  .rich-editor ul { list-style: disc; padding-inline-start: 1.5rem; margin-block: 0.5rem; }
+  .rich-editor ol { list-style: decimal; padding-inline-start: 1.5rem; margin-block: 0.5rem; }
+  .rich-editor blockquote {
+    border-inline-start: 3px solid #d1d5db;
+    padding-inline-start: 1rem;
+    color: #6b7280;
+    margin-block: 0.75rem;
+  }
+  .rich-editor img { max-width: 100%; height: auto; border-radius: 0.5rem; margin-block: 0.75rem; }
+  .rich-editor code {
+    background: #f3f4f6;
+    padding: 0.125rem 0.375rem;
+    border-radius: 0.25rem;
+    font-family: ui-monospace, monospace;
+    font-size: 0.875em;
+  }
+  .rich-editor pre {
+    background: #1f2937;
+    color: #f3f4f6;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    overflow-x: auto;
+    margin-block: 0.75rem;
+  }
+  .rich-editor pre code { background: transparent; padding: 0; color: inherit; }
+  .rich-editor a { color: var(--color-primary); text-decoration: underline; }
+  .rich-editor p.is-editor-empty:first-child::before {
+    content: attr(data-placeholder);
+    color: #9ca3af;
+    float: left;
+    pointer-events: none;
+    height: 0;
+  }
+}

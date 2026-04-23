@@ -38,15 +38,19 @@ export async function request<T>(
   path: string,
   { method = 'GET', body, token, headers }: RequestOptions = {},
 ): Promise<T> {
+  const isFormData = body instanceof FormData;
+
   const res = await fetch(`${BASE_URL}${path}`, {
     method,
     headers: {
-      'Content-Type': 'application/json',
       Accept: 'application/json',
+      ...(isFormData ? {} : body !== undefined ? { 'Content-Type': 'application/json' } : {}),
       ...(token ? { Authorization: `Bearer ${token}` } : {}),
       ...headers,
     },
-    ...(body !== undefined ? { body: JSON.stringify(body) } : {}),
+    ...(body !== undefined
+      ? { body: isFormData ? (body as FormData) : JSON.stringify(body) }
+      : {}),
   });
 
   if (res.status === 204) return null as T;
