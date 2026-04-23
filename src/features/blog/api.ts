@@ -11,13 +11,17 @@ type ListParams = {
   offset?: number;
 };
 
-export function listBlogPosts(params: ListParams = {}): Promise<PaginatedBlogPosts> {
+export function listBlogPosts(
+  token: string,
+  params: ListParams = {},
+): Promise<PaginatedBlogPosts> {
   const query = new URLSearchParams();
   if (params.limit !== undefined) query.set('limit', String(params.limit));
   if (params.offset !== undefined) query.set('offset', String(params.offset));
   const qs = query.toString();
   return request<PaginatedBlogPosts>(
     `/api/v1/blog-posts${qs ? `?${qs}` : ''}`,
+    { token },
   );
 }
 

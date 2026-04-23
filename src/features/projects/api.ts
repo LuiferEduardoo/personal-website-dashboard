@@ -11,12 +11,17 @@ type ListParams = {
   offset?: number;
 };
 
-export function listProjects(params: ListParams = {}): Promise<PaginatedProjects> {
+export function listProjects(
+  token: string,
+  params: ListParams = {},
+): Promise<PaginatedProjects> {
   const query = new URLSearchParams();
   if (params.limit !== undefined) query.set('limit', String(params.limit));
   if (params.offset !== undefined) query.set('offset', String(params.offset));
   const qs = query.toString();
-  return request<PaginatedProjects>(`/api/v1/projects${qs ? `?${qs}` : ''}`);
+  return request<PaginatedProjects>(`/api/v1/projects${qs ? `?${qs}` : ''}`, {
+    token,
+  });
 }
 
 function toCreateFormData(payload: ProjectCreatePayload): FormData {

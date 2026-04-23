@@ -32,11 +32,12 @@ export default function BlogPage() {
   const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
+    if (!token) return;
     let cancelled = false;
     setLoading(true);
     setError(null);
 
-    listBlogPosts({ limit: LIST_LIMIT })
+    listBlogPosts(token, { limit: LIST_LIMIT })
       .then((res) => {
         if (!cancelled) setPosts(res.items);
       })
@@ -55,7 +56,7 @@ export default function BlogPage() {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [token]);
 
   const handleCreate = useCallback(
     async (payload: BlogPostCreatePayload) => {

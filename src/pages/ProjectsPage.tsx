@@ -32,11 +32,12 @@ export default function ProjectsPage() {
   const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
+    if (!token) return;
     let cancelled = false;
     setLoading(true);
     setError(null);
 
-    listProjects({ limit: LIST_LIMIT })
+    listProjects(token, { limit: LIST_LIMIT })
       .then((res) => {
         if (!cancelled) setProjects(res.items);
       })
@@ -55,7 +56,7 @@ export default function ProjectsPage() {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [token]);
 
   const handleCreate = useCallback(
     async (payload: ProjectCreatePayload) => {
