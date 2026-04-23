@@ -188,6 +188,20 @@ En esos casos, documenta en el código *por qué* se hace el re-fetch.
 - Orden sugerido de clases: layout → spacing → sizing → typography → colors → effects.
 - Para variantes condicionales, usa helpers como `clsx` o `cn` en lugar de concatenar strings.
 
+### Paleta de colores
+
+Los colores del proyecto se definen como tokens de tema en [src/index.css](src/index.css) usando la directiva `@theme` de Tailwind v4. **No uses valores hex inline ni utilidades de paletas por defecto (`bg-blue-500`, `text-indigo-600`) para los colores de marca** — siempre consume los tokens:
+
+| Token | Valor | Utilidades Tailwind |
+| --- | --- | --- |
+| `--color-primary` | `#60a5fa` | `bg-primary`, `text-primary`, `border-primary`, `ring-primary` |
+| `--color-primary-hover` | `#3b82f6` | `hover:bg-primary-hover` |
+| `--color-primary-foreground` | `#ffffff` | `text-primary-foreground` |
+
+- Botones y acciones primarias: `bg-primary text-primary-foreground hover:bg-primary-hover`.
+- Focus rings de inputs/controles: `focus:border-primary focus:ring-primary/30`.
+- Si necesitas un nuevo color de marca, agrégalo como token en `@theme` (p. ej. `--color-accent`, `--color-danger`) antes de usarlo en los componentes.
+
 ### Exports
 
 - Export nombrado por defecto para componentes (`export default function Button() {}`).
