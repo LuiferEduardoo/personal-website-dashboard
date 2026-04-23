@@ -1,23 +1,13 @@
-import type { ReactNode } from 'react';
-import Sidebar, { type NavItem } from './Sidebar';
+import { Outlet } from 'react-router-dom';
+import Sidebar from './Sidebar';
 
-type Props = {
-  items: NavItem[];
-  activeId: string;
-  onSelect: (id: string) => void;
-  children: ReactNode;
-};
-
-export default function DashboardLayout({
-  items,
-  activeId,
-  onSelect,
-  children,
-}: Props) {
+export default function DashboardLayout() {
   return (
     <div className="min-h-screen bg-gray-50">
-      <Sidebar items={items} activeId={activeId} onSelect={onSelect} />
-      <main className="ml-16 px-6 py-8 md:px-10">{children}</main>
+      <Sidebar />
+      <main className="ml-16 px-6 py-8 md:px-10">
+        <Outlet />
+      </main>
     </div>
   );
 }

@@ -1,43 +1,41 @@
-import { useState } from 'react';
-import type { ReactNode } from 'react';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { useAuth } from './context/AuthContext';
 import LoginPage from './pages/LoginPage';
-import BlogPage from './pages/BlogPage';
-import ProjectsPage from './pages/ProjectsPage';
-import ImagesPage from './pages/ImagesPage';
 import DashboardLayout from './components/layout/DashboardLayout';
-import type { NavItem } from './components/layout/Sidebar';
-import { BlogIcon, ImagesIcon, ProjectsIcon } from './components/icons';
-
-type SectionId = 'blog' | 'projects' | 'images';
-
-const NAV_ITEMS: (NavItem & { id: SectionId })[] = [
-  { id: 'blog', label: 'Blog', icon: <BlogIcon /> },
-  { id: 'projects', label: 'Proyectos', icon: <ProjectsIcon /> },
-  { id: 'images', label: 'Imágenes', icon: <ImagesIcon /> },
-];
-
-const SECTION_PAGES: Record<SectionId, ReactNode> = {
-  blog: <BlogPage />,
-  projects: <ProjectsPage />,
-  images: <ImagesPage />,
-};
+import BlogListPage from './pages/blog/BlogListPage';
+import BlogCreatePage from './pages/blog/BlogCreatePage';
+import BlogEditPage from './pages/blog/BlogEditPage';
+import ProjectsListPage from './pages/projects/ProjectsListPage';
+import ProjectCreatePage from './pages/projects/ProjectCreatePage';
+import ProjectEditPage from './pages/projects/ProjectEditPage';
+import ImagesPage from './pages/ImagesPage';
+import { BlogPostsProvider } from './features/blog/context';
+import { ProjectsProvider } from './features/projects/context';
 
 export default function App() {
   const { isAuthenticated } = useAuth();
-  const [section, setSection] = useState<SectionId>('blog');
 
   if (!isAuthenticated) {
     return <LoginPage />;
   }
 
   return (
-    <DashboardLayout
-      items={NAV_ITEMS}
-      activeId={section}
-      onSelect={(id) => setSection(id as SectionId)}
-    >
-      {SECTION_PAGES[section]}
-    </DashboardLayout>
+    <BlogPostsProvider>
+      <ProjectsProvider>
+        <Routes>
+          <Route element={<DashboardLayout />}>
+            <Route index element={<Navigate to="/blogs" replace />} />
+            <Route path="/blogs" element={<BlogListPage />} />
+            <Route path="/blogs/new" element={<BlogCreatePage />} />
+            <Route path="/blogs/:id/edit" element={<BlogEditPage />} />
+            <Route path="/projects" element={<ProjectsListPage />} />
+            <Route path="/projects/new" element={<ProjectCreatePage />} />
+            <Route path="/projects/:id/edit" element={<ProjectEditPage />} />
+            <Route path="/images" element={<ImagesPage />} />
+            <Route path="*" element={<Navigate to="/blogs" replace />} />
+          </Route>
+        </Routes>
+      </ProjectsProvider>
+    </BlogPostsProvider>
   );
 }

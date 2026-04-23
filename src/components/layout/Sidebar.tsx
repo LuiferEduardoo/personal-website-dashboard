@@ -1,24 +1,25 @@
+import { NavLink } from 'react-router-dom';
 import type { ReactNode } from 'react';
-import { LogoIcon, LogoutIcon } from '../icons';
+import { BlogIcon, ImagesIcon, LogoIcon, LogoutIcon, ProjectsIcon } from '../icons';
 import { useAuth } from '../../context/AuthContext';
 import UserBadge from './UserBadge';
 
-export type NavItem = {
-  id: string;
+type NavItem = {
+  to: string;
   label: string;
   icon: ReactNode;
 };
 
-type Props = {
-  items: NavItem[];
-  activeId: string;
-  onSelect: (id: string) => void;
-};
+const NAV_ITEMS: NavItem[] = [
+  { to: '/blogs', label: 'Blog', icon: <BlogIcon /> },
+  { to: '/projects', label: 'Proyectos', icon: <ProjectsIcon /> },
+  { to: '/images', label: 'Imágenes', icon: <ImagesIcon /> },
+];
 
 const labelClasses =
   'whitespace-nowrap text-sm font-medium opacity-0 transition-opacity duration-200 group-hover:opacity-100';
 
-export default function Sidebar({ items, activeId, onSelect }: Props) {
+export default function Sidebar() {
   const { user, logout } = useAuth();
 
   return (
@@ -35,30 +36,25 @@ export default function Sidebar({ items, activeId, onSelect }: Props) {
         </div>
 
         <nav aria-label="Secciones" className="flex flex-col gap-1 px-3">
-          {items.map((item) => {
-            const isActive = item.id === activeId;
-            return (
-              <button
-                key={item.id}
-                type="button"
-                title={item.label}
-                aria-label={item.label}
-                aria-current={isActive ? 'page' : undefined}
-                onClick={() => onSelect(item.id)}
-                className={
-                  'flex h-10 items-center gap-3 rounded-lg px-2.5 transition focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 ' +
-                  (isActive
-                    ? 'bg-primary/10 text-primary'
-                    : 'text-gray-500 hover:bg-gray-100 hover:text-gray-900')
-                }
-              >
-                <span className="flex h-5 w-5 shrink-0 items-center justify-center">
-                  {item.icon}
-                </span>
-                <span className={labelClasses}>{item.label}</span>
-              </button>
-            );
-          })}
+          {NAV_ITEMS.map((item) => (
+            <NavLink
+              key={item.to}
+              to={item.to}
+              title={item.label}
+              aria-label={item.label}
+              className={({ isActive }) =>
+                'flex h-10 items-center gap-3 rounded-lg px-2.5 transition focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 ' +
+                (isActive
+                  ? 'bg-primary/10 text-primary'
+                  : 'text-gray-500 hover:bg-gray-100 hover:text-gray-900')
+              }
+            >
+              <span className="flex h-5 w-5 shrink-0 items-center justify-center">
+                {item.icon}
+              </span>
+              <span className={labelClasses}>{item.label}</span>
+            </NavLink>
+          ))}
         </nav>
       </div>
 
