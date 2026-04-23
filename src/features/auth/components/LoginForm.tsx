@@ -3,7 +3,7 @@ import { useAuth } from '../../../context/AuthContext';
 import { ApiError } from '../../../lib/api';
 
 export default function LoginForm() {
-  const { login } = useAuth();
+  const { login, sessionExpired } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
@@ -61,6 +61,15 @@ export default function LoginForm() {
           className="rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/30 disabled:cursor-not-allowed disabled:opacity-60"
         />
       </div>
+
+      {sessionExpired && !error && (
+        <p
+          role="status"
+          className="rounded-md border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-700"
+        >
+          Tu sesión expiró. Inicia sesión de nuevo para continuar.
+        </p>
+      )}
 
       {error && (
         <p
