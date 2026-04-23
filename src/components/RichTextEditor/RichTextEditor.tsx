@@ -9,9 +9,15 @@ type Props = {
   value: string;
   onChange: (html: string) => void;
   placeholder?: string;
+  uploadFolder?: string;
 };
 
-export default function RichTextEditor({ value, onChange, placeholder }: Props) {
+export default function RichTextEditor({
+  value,
+  onChange,
+  placeholder,
+  uploadFolder,
+}: Props) {
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
@@ -45,7 +51,7 @@ export default function RichTextEditor({ value, onChange, placeholder }: Props) 
 
   return (
     <div className="overflow-hidden rounded-lg border border-gray-200 bg-white">
-      <RichTextToolbar editor={editor} />
+      <RichTextToolbar editor={editor} uploadFolder={uploadFolder} />
       <EditorContent editor={editor} />
     </div>
   );

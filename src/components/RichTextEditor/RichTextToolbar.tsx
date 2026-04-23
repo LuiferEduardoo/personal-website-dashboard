@@ -1,11 +1,12 @@
 import type { Editor } from '@tiptap/react';
 import type { ChangeEvent, ReactNode } from 'react';
 import { useRef } from 'react';
-import { useAuth } from '../../../context/AuthContext';
-import { uploadImage } from '../../images/api';
+import { useAuth } from '../../context/AuthContext';
+import { uploadImage } from '../../features/images/api';
 
 type Props = {
   editor: Editor | null;
+  uploadFolder?: string;
 };
 
 type ToolButtonProps = {
@@ -41,7 +42,7 @@ function Divider() {
   return <span className="mx-1 h-5 w-px bg-gray-200" aria-hidden />;
 }
 
-export default function RichTextToolbar({ editor }: Props) {
+export default function RichTextToolbar({ editor, uploadFolder }: Props) {
   const { token } = useAuth();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -67,7 +68,7 @@ export default function RichTextToolbar({ editor }: Props) {
     event.target.value = '';
     if (!file || !token) return;
     try {
-      const image = await uploadImage(file, token, 'blog-content');
+      const image = await uploadImage(file, token, uploadFolder);
       editor.chain().focus().setImage({ src: image.url, alt: image.name }).run();
     } catch (err) {
       console.error('Error uploading image', err);

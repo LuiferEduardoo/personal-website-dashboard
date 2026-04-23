@@ -1,5 +1,5 @@
 import { useState, type ChangeEvent, type SubmitEvent } from 'react';
-import RichTextEditor from './RichTextEditor';
+import RichTextEditor from '../../../components/RichTextEditor';
 import { ApiError } from '../../../lib/api';
 import type {
   BlogPostCreatePayload,
@@ -173,6 +173,7 @@ export default function BlogEditor({
           value={content}
           onChange={setContent}
           placeholder="Empieza a escribir tu artículo..."
+          uploadFolder="blog-content"
         />
       </div>
 
