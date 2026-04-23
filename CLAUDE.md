@@ -8,7 +8,15 @@ Guía para trabajar en este proyecto. Sigue estas convenciones al generar o modi
 - **Vite 8** — bundler y dev server (`npm run dev`, `npm run build`, `npm run preview`).
 - **Tailwind CSS 4** — framework utility-first, integrado vía `@tailwindcss/vite` e importado con `@import "tailwindcss";` en [src/index.css](src/index.css).
 - **ESLint 9** — linter configurado en [eslint.config.js](eslint.config.js) con `eslint-plugin-react-hooks` y `eslint-plugin-react-refresh`.
-- **JavaScript (ESM)** — `"type": "module"` en [package.json](package.json).
+- **TypeScript** — tipado estático, configurado vía [tsconfig.json](tsconfig.json). Módulos ESM (`"type": "module"` en [package.json](package.json)).
+
+### Convenciones TypeScript
+- Todo archivo nuevo debe ser `.ts` o `.tsx`. No se permite JavaScript plano salvo archivos de configuración donde la herramienta no lo soporte.
+- Evita `any`. Si realmente no conoces el tipo, usa `unknown` y reduce con type guards.
+- Prefiere `type` para uniones/intersecciones y `interface` para contratos de objetos extensibles.
+- Tipa las props de componentes con un `type Props = { ... }` explícito (no inline en la firma).
+- No uses enums; prefiere uniones literales (`type Status = 'idle' | 'loading' | 'error'`).
+- Deriva tipos del backend del schema OpenAPI cuando sea posible en lugar de duplicarlos manualmente.
 
 ## API backend
 
@@ -21,7 +29,8 @@ Guía para trabajar en este proyecto. Sigue estas convenciones al generar o modi
 ## Scripts
 
 - `npm run dev` — inicia el servidor de desarrollo.
-- `npm run build` — genera el build de producción.
+- `npm run build` — ejecuta `tsc -b` y genera el build de producción.
+- `npm run typecheck` — verifica tipos sin emitir archivos.
 - `npm run lint` — ejecuta ESLint sobre el proyecto.
 - `npm run preview` — sirve el build localmente.
 
