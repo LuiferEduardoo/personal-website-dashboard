@@ -2,6 +2,7 @@ import type { UserRead } from '../../features/user/types';
 
 type Props = {
   user: UserRead;
+  expanded: boolean;
 };
 
 function getInitials(name: string): string {
@@ -13,7 +14,7 @@ function getInitials(name: string): string {
     .join('');
 }
 
-export default function UserBadge({ user }: Props) {
+export default function UserBadge({ user, expanded }: Props) {
   return (
     <div className="flex items-center gap-3 px-1 py-2">
       {user.profile_photo ? (
@@ -27,7 +28,12 @@ export default function UserBadge({ user }: Props) {
           {getInitials(user.name) || '?'}
         </div>
       )}
-      <div className="flex min-w-0 flex-col opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+      <div
+        className={
+          'flex min-w-0 flex-col transition-opacity duration-200 ' +
+          (expanded ? 'opacity-100' : 'pointer-events-none opacity-0')
+        }
+      >
         <span className="truncate text-sm font-medium text-gray-900">
           {user.name}
         </span>

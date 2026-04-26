@@ -1,6 +1,13 @@
 import { NavLink } from 'react-router-dom';
 import type { ReactNode } from 'react';
-import { BlogIcon, ImagesIcon, LogoutIcon, ProjectsIcon } from '../icons';
+import {
+  BlogIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  ImagesIcon,
+  LogoutIcon,
+  ProjectsIcon,
+} from '../icons';
 import { useAuth } from '../../context/AuthContext';
 import UserBadge from './UserBadge';
 
@@ -16,24 +23,46 @@ const NAV_ITEMS: NavItem[] = [
   { to: '/images', label: 'Imágenes', icon: <ImagesIcon /> },
 ];
 
-const labelClasses =
-  'whitespace-nowrap text-sm font-medium opacity-0 transition-opacity duration-200 group-hover:opacity-100';
+type Props = {
+  expanded: boolean;
+  onToggle: () => void;
+};
 
-export default function Sidebar() {
+export default function Sidebar({ expanded, onToggle }: Props) {
   const { user, logout } = useAuth();
+
+  const labelClasses = expanded
+    ? 'whitespace-nowrap text-sm font-medium opacity-100 transition-opacity duration-200'
+    : 'pointer-events-none whitespace-nowrap text-sm font-medium opacity-0 transition-opacity duration-200';
 
   return (
     <aside
       aria-label="Navegación principal"
-      className="group fixed inset-y-0 left-0 z-20 flex w-16 flex-col justify-between overflow-hidden border-r border-gray-200 bg-white py-5 shadow-sm transition-[width] duration-200 ease-out hover:w-60"
+      className={
+        'fixed inset-y-0 left-0 z-20 flex flex-col justify-between overflow-hidden border-r border-gray-200 bg-white py-5 shadow-sm transition-[width] duration-200 ease-out ' +
+        (expanded ? 'w-60' : 'w-16')
+      }
     >
-      <div className="flex flex-col gap-8">
-        <div className="flex items-center gap-3 px-3">
-          <img
-            src="/logo.svg"
-            alt="Logo"
-            className="h-10 w-10 shrink-0"
-          />
+      <div className="flex flex-col gap-6">
+        <div
+          className={
+            'flex items-center gap-2 px-3 ' +
+            (expanded ? 'justify-between' : 'justify-center')
+          }
+        >
+          {expanded && (
+            <img src="/logo.svg" alt="Logo" className="h-10 w-10 shrink-0" />
+          )}
+          <button
+            type="button"
+            onClick={onToggle}
+            aria-label={expanded ? 'Colapsar menú' : 'Expandir menú'}
+            aria-expanded={expanded}
+            title={expanded ? 'Colapsar menú' : 'Expandir menú'}
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md text-gray-500 transition hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+          >
+            {expanded ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+          </button>
         </div>
 
         <nav aria-label="Secciones" className="flex flex-col gap-1 px-3">
@@ -60,7 +89,7 @@ export default function Sidebar() {
       </div>
 
       <div className="flex flex-col gap-1 px-3">
-        {user && <UserBadge user={user} />}
+        {user && <UserBadge user={user} expanded={expanded} />}
 
         <button
           type="button"
