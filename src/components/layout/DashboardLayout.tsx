@@ -1,9 +1,11 @@
 import { useState } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import Sidebar from './Sidebar';
 
 export default function DashboardLayout() {
   const [expanded, setExpanded] = useState(false);
+  const location = useLocation();
+  const sectionKey = location.pathname.split('/')[1] ?? '';
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -14,7 +16,9 @@ export default function DashboardLayout() {
           (expanded ? 'ml-60' : 'ml-16')
         }
       >
-        <Outlet />
+        <div key={sectionKey} className="animate-page-enter">
+          <Outlet />
+        </div>
       </main>
     </div>
   );
