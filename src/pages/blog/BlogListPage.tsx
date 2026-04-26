@@ -32,14 +32,6 @@ export default function BlogListPage() {
     }
   }, [pendingDelete, removePost]);
 
-  if (loading) {
-    return (
-      <section className="py-12 text-center text-sm text-gray-500">
-        Cargando publicaciones…
-      </section>
-    );
-  }
-
   const error = deleteError ?? listError;
 
   return (
@@ -55,6 +47,7 @@ export default function BlogListPage() {
 
       <BlogList
         posts={posts}
+        loading={loading}
         onCreate={() => navigate('/blogs/new')}
         onEdit={(post) => navigate(`/blogs/${post.id}/edit`)}
         onDelete={(post) => setPendingDelete(post)}
