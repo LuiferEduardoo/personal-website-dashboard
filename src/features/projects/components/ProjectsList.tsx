@@ -1,11 +1,37 @@
+import Skeleton from '../../../components/ui/Skeleton';
 import type { ProjectRead } from '../types';
 
 type Props = {
   projects: ProjectRead[];
+  loading?: boolean;
   onCreate: () => void;
   onEdit: (project: ProjectRead) => void;
   onDelete: (project: ProjectRead) => void;
 };
+
+const SKELETON_COUNT = 6;
+
+function ProjectCardSkeleton() {
+  return (
+    <li className="flex flex-col overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm">
+      <Skeleton className="h-40 w-full rounded-none" />
+      <div className="flex flex-1 flex-col gap-3 p-4">
+        <Skeleton className="h-3 w-24" />
+        <Skeleton className="h-5 w-4/5" />
+        <div className="flex flex-col gap-2">
+          <Skeleton className="h-3 w-full" />
+          <Skeleton className="h-3 w-11/12" />
+          <Skeleton className="h-3 w-2/3" />
+        </div>
+        <Skeleton className="h-3 w-1/2" />
+        <div className="mt-auto flex justify-end gap-2 pt-2">
+          <Skeleton className="h-8 w-16" />
+          <Skeleton className="h-8 w-16" />
+        </div>
+      </div>
+    </li>
+  );
+}
 
 function formatDate(iso: string): string {
   try {
@@ -19,7 +45,13 @@ function formatDate(iso: string): string {
   }
 }
 
-export default function ProjectsList({ projects, onCreate, onEdit, onDelete }: Props) {
+export default function ProjectsList({
+  projects,
+  loading,
+  onCreate,
+  onEdit,
+  onDelete,
+}: Props) {
   return (
     <section>
       <header className="mb-6 flex items-center justify-between">
@@ -32,13 +64,20 @@ export default function ProjectsList({ projects, onCreate, onEdit, onDelete }: P
         <button
           type="button"
           onClick={onCreate}
-          className="inline-flex items-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow-sm transition hover:bg-primary-hover"
+          disabled={loading}
+          className="inline-flex items-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow-sm transition hover:bg-primary-hover disabled:cursor-not-allowed disabled:opacity-60"
         >
           Nuevo proyecto
         </button>
       </header>
 
-      {projects.length === 0 ? (
+      {loading ? (
+        <ul className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+          {Array.from({ length: SKELETON_COUNT }).map((_, idx) => (
+            <ProjectCardSkeleton key={idx} />
+          ))}
+        </ul>
+      ) : projects.length === 0 ? (
         <div className="rounded-lg border border-dashed border-gray-300 bg-white px-6 py-12 text-center">
           <h2 className="text-base font-medium text-gray-900">No hay proyectos</h2>
           <p className="mt-1 text-sm text-gray-500">

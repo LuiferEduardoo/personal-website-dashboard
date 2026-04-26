@@ -32,14 +32,6 @@ export default function ProjectsListPage() {
     }
   }, [pendingDelete, removeProject]);
 
-  if (loading) {
-    return (
-      <section className="py-12 text-center text-sm text-gray-500">
-        Cargando proyectos…
-      </section>
-    );
-  }
-
   const error = deleteError ?? listError;
 
   return (
@@ -55,6 +47,7 @@ export default function ProjectsListPage() {
 
       <ProjectsList
         projects={projects}
+        loading={loading}
         onCreate={() => navigate('/projects/new')}
         onEdit={(project) => navigate(`/projects/${project.id}/edit`)}
         onDelete={(project) => setPendingDelete(project)}
