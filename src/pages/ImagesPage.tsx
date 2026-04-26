@@ -134,6 +134,7 @@ export default function ImagesPage() {
           images={images}
           onDelete={handleDelete}
           deletingId={deletingId}
+          uploadingCount={uploadingCount}
         />
       </div>
     </section>
