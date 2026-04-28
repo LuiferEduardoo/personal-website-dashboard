@@ -8,3 +8,8 @@ export type TokenResponse = {
   token_type: string;
   expires_in: number;
 };
+
+export type PasswordChangeRequest = {
+  current_password: string;
+  new_password: string;
+};
