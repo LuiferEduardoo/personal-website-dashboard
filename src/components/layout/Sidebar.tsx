@@ -5,11 +5,10 @@ import {
   ChevronLeftIcon,
   ChevronRightIcon,
   ImagesIcon,
-  LogoutIcon,
   ProjectsIcon,
 } from '../icons';
 import { useAuth } from '../../context/AuthContext';
-import UserBadge from './UserBadge';
+import UserMenu from './UserMenu';
 
 type NavItem = {
   to: string;
@@ -39,7 +38,7 @@ export default function Sidebar({ expanded, onToggle }: Props) {
     <aside
       aria-label="Navegación principal"
       className={
-        'fixed inset-y-0 left-0 z-20 flex flex-col justify-between overflow-hidden border-r border-gray-200 bg-white py-5 shadow-sm transition-[width] duration-200 ease-out ' +
+        'fixed inset-y-0 left-0 z-20 flex flex-col justify-between border-r border-gray-200 bg-white py-5 shadow-sm transition-[width] duration-200 ease-out ' +
         (expanded ? 'w-60' : 'w-16')
       }
     >
@@ -88,21 +87,8 @@ export default function Sidebar({ expanded, onToggle }: Props) {
         </nav>
       </div>
 
-      <div className="flex flex-col gap-1 px-3">
-        {user && <UserBadge user={user} expanded={expanded} />}
-
-        <button
-          type="button"
-          onClick={logout}
-          title="Cerrar sesión"
-          aria-label="Cerrar sesión"
-          className="flex h-10 items-center gap-3 rounded-lg px-2.5 text-gray-500 transition hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
-        >
-          <span className="flex h-5 w-5 shrink-0 items-center justify-center">
-            <LogoutIcon />
-          </span>
-          <span className={labelClasses}>Cerrar sesión</span>
-        </button>
+      <div className="flex flex-col gap-1 px-3 pb-2">
+        {user && <UserMenu user={user} expanded={expanded} onLogout={logout} />}
       </div>
     </aside>
   );
