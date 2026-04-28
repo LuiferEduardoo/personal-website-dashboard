@@ -72,7 +72,7 @@ export default function UserMenu({ user, expanded, onLogout }: Props) {
         >
           <div className="flex flex-col py-1">
             <NavLink
-              to="/settings"
+              to="/profile"
               onClick={() => setIsOpen(false)}
               className={({ isActive }) =>
                 'flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 ' +

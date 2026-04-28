@@ -23,6 +23,7 @@ type AuthContextValue = {
   sessionExpired: boolean;
   login: (payload: LoginRequest) => Promise<void>;
   logout: () => void;
+  updateUser: (user: UserRead) => void;
 };
 
 // eslint-disable-next-line react-refresh/only-export-components
@@ -130,6 +131,7 @@ export function AuthProvider({ children }: Props) {
       sessionExpired,
       login,
       logout,
+      updateUser: setUser,
     }),
     [token, user, userLoading, sessionExpired, login, logout],
   );

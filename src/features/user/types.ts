@@ -18,3 +18,8 @@ export type UserRead = {
   created_at: string;
   updated_at: string;
 };
+
+export type UserUpdateMe = {
+  name?: string;
+  email?: string;
+};

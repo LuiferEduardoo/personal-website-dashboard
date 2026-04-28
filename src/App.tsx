@@ -10,6 +10,7 @@ import ProjectCreatePage from './pages/projects/ProjectCreatePage';
 import ProjectEditPage from './pages/projects/ProjectEditPage';
 import ImagesPage from './pages/ImagesPage';
 import SettingsPage from './pages/settings/SettingsPage';
+import ProfilePage from './pages/profile/ProfilePage';
 import { BlogPostsProvider } from './features/blog/context';
 import { ProjectsProvider } from './features/projects/context';
 
@@ -34,6 +35,7 @@ export default function App() {
             <Route path="/projects/:id/edit" element={<ProjectEditPage />} />
             <Route path="/images" element={<ImagesPage />} />
             <Route path="/settings" element={<SettingsPage />} />
+            <Route path="/profile" element={<ProfilePage />} />
             <Route path="*" element={<Navigate to="/blogs" replace />} />
           </Route>
         </Routes>
